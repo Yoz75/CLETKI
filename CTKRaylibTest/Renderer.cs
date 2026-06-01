@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CTK.RaylibTest
+namespace CTK.Test
 {
     internal class Renderer
     {

@@ -2,9 +2,8 @@
 using CTK.Engine;
 using CTK.Engine.Rules;
 using System.Collections.Generic;
-using System.Threading;
 
-namespace CTK.RaylibTest;
+namespace CTK.Test;
 
 internal class Program
 {
