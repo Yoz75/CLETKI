@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace CTK.Engine;
 
@@ -18,6 +19,7 @@ public sealed class AutomatonStage : IAutomatonStage
 
     private Cell[,]? TempField;
     private readonly IRule[] Rules;
+    private readonly ParallelOptions UpdateOptions = new() { MaxDegreeOfParallelism = Environment.ProcessorCount};
 
     public AutomatonStage(int steps, params IRule[] rules)
     {
@@ -46,9 +48,9 @@ public sealed class AutomatonStage : IAutomatonStage
         (int, int) start = CurrentField.MyBounds.ValidStart;
         (int, int) end = CurrentField.MyBounds.ValidEnd;
 
-        for(int y = start.Item2; y < end.Item2; y++)
+        Parallel.For(start.Item2, end.Item2, UpdateOptions, (y) =>
         {
-            for(int x = start.Item1; x < end.Item1; x++)
+            Parallel.For(start.Item1, end.Item1, UpdateOptions, (x) =>
             {
                 foreach(var rule in Rules)
                 {
@@ -62,10 +64,10 @@ public sealed class AutomatonStage : IAutomatonStage
                 }
 
                 TempField![x, y] = CurrentField.Map[x, y];
-                
+
             nextCell:;
-            }
-        }
+            });
+        });
 
         (TempField, CurrentField.Map) = (CurrentField.Map, TempField);
         CurrentStep++;
