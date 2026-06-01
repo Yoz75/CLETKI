@@ -53,4 +53,32 @@ internal class Program
 
         return engine;
     }
+
+    static CTKEngine FlowersMaker(int sizeX, int sizeY)
+    {
+        Cell sky = CellTypeRegistrar.Register();
+        Cell flower = CellTypeRegistrar.Register();
+        Cell removeMarker = CellTypeRegistrar.Register();
+        Cell petal = CellTypeRegistrar.Register();
+
+        AutomatonStage seedFlowersStage = new(1, new RandomWrapperRule<AlwaysRule>(0.1f, new(flower)));
+
+        AutomatonStage cleanupBeginStage = new(2, 
+            new NearRule(flower, removeMarker, 2, 3, 4, 5, 6, 7, 8),
+            new StartTypeWrapperRule<NearRule>(flower, new(removeMarker, sky, 1, 2, 3, 4, 5, 6, 7, 8)));
+
+        AutomatonStage cleanupEndStage = new(1, new StartTypeWrapperRule<AlwaysRule>(removeMarker, new(sky)));
+
+        AutomatonStage growPetalsStage = new(1, new StartTypeWrapperRule<NearRule>(sky, new(flower, petal, 1)));
+
+        Queue<IAutomatonStage> stages = [];
+        stages.Enqueue(seedFlowersStage);
+        stages.Enqueue(cleanupBeginStage); 
+        stages.Enqueue(cleanupEndStage);
+        stages.Enqueue(growPetalsStage);
+
+        CTKEngine engine = new((sizeX, sizeY), sky, stages);
+
+        return engine;
+    }
 }
