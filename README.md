@@ -1,6 +1,6 @@
 # WHAT IS CLETKI
 
-CLETKI, or CTK is a simple to use cellular automaton engine (i.e simplifies automata creation) with multithreading support (CLETKI uses all machine cores by default). It doesn't provides rendering stuff and other things, but you can see [an example of making Game of Life simulation and its rendering](https://github.com/Yoz75/CLETKI/tree/main/CTKTest) in the CTKTest project.
+CHETKI is an easy-to-use engine for creating cellular automata. (i.e simplifies automata creation) with multithreading support (CLETKI uses all machine cores by default). It doesn't provides rendering stuff and other things, but you can see [an example of making Game of Life simulation and its rendering](https://github.com/Yoz75/CLETKI/tree/main/CTKTest) in the CTKTest project.
 
 ## FAST HELLO WORLD EXAMPLE WITHOUT EXPLANATION
 This code shows how to make GoL simulation and render it:
