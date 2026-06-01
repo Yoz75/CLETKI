@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace CTK.Engine.Rules;
 
 /// <summary>
-/// /// Turns cell to end type if there was required ty[e at a local biased position and initial type was the start type
+/// /// Turns cell to end type if there was required type at a local biased position and initial type was the start type
 /// </summary>
 public sealed class LocalPositionRule : IRule
 {
