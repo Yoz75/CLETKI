@@ -34,8 +34,9 @@ namespace CTK.Test
 
                 Console.WriteLine();
             }
-            Console.Clear();
+
             Console.WriteLine();
+            Console.SetCursorPosition(0, 0);
         }
     }
 }
