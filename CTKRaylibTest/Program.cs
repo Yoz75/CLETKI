@@ -10,7 +10,7 @@ internal class Program
     private delegate CTKEngine EngineMaker(int sizeX, int sizeY);
     static void Main(string[] args)
     {
-        int sizeX = 32, sizeY = 32;
+        int sizeX = 96, sizeY = 48;
         Renderer renderer = new();
         EngineMaker maker = GoLMaker;
 
@@ -19,6 +19,7 @@ internal class Program
         while(engine.CanUpdate())
         {
             engine.Update();
+            // Renderer is very slow, CLETKI  is MUCH faster when lauch without it!
             renderer.Update(engine.GetState());
         }
     }
@@ -48,7 +49,7 @@ internal class Program
         stages.Enqueue(randomStage);
         stages.Enqueue(golUpdateStage);
 
-        CTKEngine engine = new CTKEngine((sizeX, sizeY), dead, stages);
+        CTKEngine engine = new((sizeX, sizeY), dead, stages);
 
         return engine;
     }
