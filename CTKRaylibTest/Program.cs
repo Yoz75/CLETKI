@@ -19,7 +19,7 @@ internal class Program
         while(engine.CanUpdate())
         {
             engine.Update();
-            // Renderer is very slow, CLETKI  is MUCH faster when lauch without it!
+            // Renderer is very slow, CLETKI  is MUCH faster when launch without it!
             renderer.Update(engine.GetState());
         }
     }
