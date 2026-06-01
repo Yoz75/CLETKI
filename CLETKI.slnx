@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CTKEngine/CTKEngine.csproj" />
+  <Project Path="CTKRaylibTest/CTKRaylibTest.csproj" />
+</Solution>
