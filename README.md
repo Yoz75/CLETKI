@@ -97,7 +97,7 @@ Currently, CLETKI has 6 rules in the `CTK.Engine.Rules namespace`, here are thei
 * `StartTypeWrapper<T>(Cell startType, T rule)` -- like previous, but for adding start type
 
 # Documentation
-Currently, all documentation is described in the Readme.md file (this file). The library is pretty small and I hope this file clearly describes how to use it. You can open CTKTest project to see more examples!
+Currently, all documentation is described in the Readme.md file (this file). The library is pretty small and I hope this file clearly describes how to use it. [You can open CTKTest project to see more examples!](https://github.com/Yoz75/CLETKI/tree/main/CTKTest)
 
 # How to build:
 Open the solution file and build the project
