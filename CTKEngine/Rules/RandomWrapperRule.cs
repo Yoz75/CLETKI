@@ -5,7 +5,7 @@ using System.Text;
 namespace CTK.Engine.Rules;
 
 /// <summary>
-/// Not a real rule, but wrapps some <typeparamref name="T"/> to add randomness
+/// A wrapper rule, that allows some <typeparamref name="T"/> to have a chance of the execution
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public sealed class RandomWrapperRule<T> : IRule where T : IRule
