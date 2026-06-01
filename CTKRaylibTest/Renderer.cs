@@ -22,7 +22,6 @@ namespace CTK.Test
 
         public void Update(Field field)
         {
-            Console.Clear();
             var start = field.MyBounds.ValidStart;
             var end = field.MyBounds.ValidEnd;
 
@@ -35,6 +34,7 @@ namespace CTK.Test
 
                 Console.WriteLine();
             }
+            Console.Clear();
             Console.WriteLine();
         }
     }
