@@ -35,7 +35,8 @@ public sealed class AutomatonStage : IAutomatonStage
     public void Prepare(Field field)
     {
         CurrentField = field;
-        TempField = new Cell[field.Resolution.Item1, field.Resolution.Item2]; 
+        var resolution = field.RawSize;
+        TempField = new Cell[resolution.Item1, resolution.Item2]; 
     }
 
     public void SetSteps(int steps) => StepsCount = steps;
