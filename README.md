@@ -1,3 +1,4 @@
+[NuGet repository](https://www.nuget.org/packages/CTKEngine)
 # WHAT IS CLETKI
 
 CHETKI is an easy-to-use engine for creating cellular automata. (i.e simplifies automata creation) with multithreading support (CLETKI uses all machine cores by default). It doesn't provides rendering stuff and other things, but you can see [an example of making Game of Life simulation and its rendering](https://github.com/Yoz75/CLETKI/tree/main/CTKTest) in the CTKTest project.
