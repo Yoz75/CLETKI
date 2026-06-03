@@ -67,7 +67,7 @@ public sealed class Field
             {
                 if(x == 0 || y == 0)
                 {
-                    Map[x, y] = new Cell() { Type = Cell.BorderType };
+                    Map[x, y] = Cell.Border;
                     continue;
                 }
 

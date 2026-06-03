@@ -16,10 +16,15 @@ public record struct Cell
     /// </summary>
     public const int BorderType = 1;
 
+    public readonly static Cell Invalid = new(InvalidType);
+    public readonly static Cell Border = new(BorderType);
+
     /// <summary>
     /// The type of the cell
     /// </summary>
     public byte Type;
+
+    public Cell(byte type) => Type = type;
 
     public bool IsValid()
     {
