@@ -61,11 +61,12 @@ public sealed class Field
 
         MyBounds = new((1, 1), (Resolution.Item1 + 1, Resolution.Item2 + 1));
 
-        for(int y = 0; y < Map.GetLength(1); y++)
+        var rawBorders = RawSize;
+        for(int y = 0; y < rawBorders.Item2; y++)
         {
-            for(int x = 0; x < Map.GetLength(0); x++)
+            for(int x = 0; x < rawBorders.Item1; x++)
             {
-                if(x == 0 || y == 0)
+                if(x == 0 || y == 0 || x == rawBorders.Item1 || y == rawBorders.Item2)
                 {
                     Map[x, y] = Cell.Border;
                     continue;
