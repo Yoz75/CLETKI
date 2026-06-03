@@ -18,7 +18,7 @@ public class CellTypeRegistrar
     /// <summary>
     /// Count of registered by this registrar types
     /// </summary>
-    public byte RegisteredTypesCount => LocalLastId - 2;
+    public byte RegisteredTypesCount => (byte)(LocalLastId - 2);
 
     /// <summary>
     /// Register a new type of cells for a cellular engine. 
