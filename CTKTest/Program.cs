@@ -8,17 +8,18 @@ namespace CTK.Test;
 internal class Program
 {
     private delegate CTKEngine EngineMaker(int sizeX, int sizeY);
-    static void Main(string[] args)
+    static void Main()
     {
-        int sizeX = 96, sizeY = 48;
-        Renderer renderer = new();
-        EngineMaker maker = GoLMaker;
+        int sizeX = 512, sizeY = 512;
 
+        using Renderer renderer = new((uint) sizeX, (uint) sizeY);
+
+        EngineMaker maker = FlowersMaker;
         CTKEngine engine = maker(sizeX, sizeY);
 
-        while(engine.CanUpdate())
+        while(renderer.CanRender())
         {
-            engine.Update();
+            if(engine.CanUpdate()) engine.Update();
             // Renderer is very slow, CLETKI  is MUCH faster when launch without it!
             renderer.Update(engine.GetState());
         }
@@ -80,5 +81,65 @@ internal class Program
         CTKEngine engine = new((sizeX, sizeY), sky, stages);
 
         return engine;
+    }
+
+    // I didn't see B35 S135 rule on the internet, so lets name it the dumblife, ok?
+    static CTKEngine DumbLifeMaker(int sizeX, int sizeY)
+    {
+        Cell dead = CellTypeRegistrar.Register();
+        Cell alive = CellTypeRegistrar.Register();
+
+        // Random wrapper calls wrapped rule in [chance] cases of all
+        // Here, wrapper calls AlwaysRule in 25 cases of 100
+        RandomWrapperRule<AlwaysRule> spawnAliveRule = new(0.25f, new AlwaysRule(alive));
+        AutomatonStage randomStage = new(1, spawnAliveRule);
+
+        // B35
+        StartTypeWrapperRule<NearRule> birthRule = new(dead, new(alive, alive, 3, 5));
+
+        // S135
+        StartTypeWrapperRule<NearRule> dieRule = new(alive, new(alive, dead, 0, 2, 4, 6, 7, 8));
+
+        AutomatonStage golUpdateStage = new(int.MaxValue, birthRule, dieRule);
+
+        Queue<IAutomatonStage> stages = [];
+        stages.Enqueue(randomStage);
+        stages.Enqueue(golUpdateStage);
+
+        CTKEngine engine = new((sizeX, sizeY), dead, stages);
+
+        return engine;
+    }
+
+    static CTKEngine DayAndNight(int sizeX, int sizeY)
+    {
+        Cell dead = CellTypeRegistrar.Register();
+        Cell alive = CellTypeRegistrar.Register();
+
+        // Random wrapper calls wrapped rule in [chance] cases of all
+        // Here, wrapper calls AlwaysRule in 25 cases of 100
+        RandomWrapperRule<AlwaysRule> spawnAliveRule = new(0.5f, new AlwaysRule(alive));
+        AutomatonStage randomStage = new(1, spawnAliveRule);
+
+        // B35
+        StartTypeWrapperRule<NearRule> birthRule = new(dead, new(alive, alive, 3, 6, 7, 8));
+
+        // S135
+        StartTypeWrapperRule<NearRule> dieRule = new(alive, new(alive, dead, 0, 1, 2, 5));
+
+        AutomatonStage golUpdateStage = new(int.MaxValue, birthRule, dieRule);
+
+        Queue<IAutomatonStage> stages = [];
+        stages.Enqueue(randomStage);
+        stages.Enqueue(golUpdateStage);
+
+        CTKEngine engine = new((sizeX, sizeY), dead, stages);
+
+        return engine;
+    }
+
+    static CTKEngine TreeMaker(int sizeX, int sizeY)
+    { 
+        throw new System.Exception();
     }
 }
