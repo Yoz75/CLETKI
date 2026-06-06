@@ -95,7 +95,7 @@ This code shows how to make GoL simulation and render it:
 Currently, CLETKI has 6 rules in the `CTK.Engine.Rules namespace`, here are their constructors:
 * `AlwaysRule(Cell endType)` -- always changes the updating cell to `endType`
 * `GlobalPositionRule((int, int) position, Cell endType)` -- changes the cell at `position` to `endType`
-* `LocalPositionRule((int, int) bias, Cell requiredType, Cell endType)` -- changes the cell to `endType`, if the cell at `bias` has `requiredType`. The bias must be in range [-1; 1], probably simulation will crash with IndexOutOfRangeException if you do it (-2; 10) for example.
+* `LocalPositionRule(PositionBias bias, Cell requiredType, Cell endType)` -- changes the cell to `endType`, if the cell at `bias` has `requiredType`.
 * `NearRule(Cell requiredType, Cell endType, params byte[] requiredNeighborsCount)` changes cell to `endType` if `requiredNeighborsCount` contains count of cell's neighbors that have `requiredType`
 * `RandomWrapperRule<T>(float chance, T rule)` -- rule that needed to add random chance of executing the wrapped rule
 * `StartTypeWrapper<T>(Cell startType, T rule)` -- like previous, but for adding start type
