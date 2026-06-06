@@ -91,13 +91,13 @@ public sealed class Field
     {
         Neighbors neighbors;
 
-        neighbors.LeftUpper = Map[position.Item1 - 1, position.Item2 - 1];
-        neighbors.Upper = Map[position.Item1, position.Item2 - 1];
-        neighbors.RightUpper = Map[position.Item1 + 1, position.Item2 - 1];
+        neighbors.LeftUpper = Map[position.Item1 - 1, position.Item2 + 1];
+        neighbors.Upper = Map[position.Item1, position.Item2 + 1];
+        neighbors.RightUpper = Map[position.Item1 + 1, position.Item2 + 1];
 
-        neighbors.LeftDown = Map[position.Item1 - 1, position.Item2 + 1];
-        neighbors.Down = Map[position.Item1, position.Item2 + 1]; ;
-        neighbors.RightDown = Map[position.Item1 + 1, position.Item2 + 1];
+        neighbors.LeftDown = Map[position.Item1 - 1, position.Item2 - 1];
+        neighbors.Down = Map[position.Item1, position.Item2 - 1]; ;
+        neighbors.RightDown = Map[position.Item1 + 1, position.Item2 - 1];
 
         neighbors.Right = Map[position.Item1 + 1, position.Item2];
         neighbors.Left = Map[position.Item1 - 1, position.Item2];
