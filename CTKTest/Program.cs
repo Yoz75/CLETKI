@@ -28,8 +28,10 @@ internal class Program
 
     static CTKEngine GoLMaker(int sizeX, int sizeY)
     {
-        Cell dead = CellTypeRegistrar.Register();
-        Cell alive = CellTypeRegistrar.Register();
+        var registrar = new CellTypeRegistrar();
+
+        Cell dead = registrar.RegisterType();
+        Cell alive = registrar.RegisterType();
 
         // Random wrapper calls wrapped rule in [chance] cases of all
         // Here, wrapper calls AlwaysRule in 25 cases of 100
@@ -58,10 +60,12 @@ internal class Program
 
     static CTKEngine FlowersMaker(int sizeX, int sizeY)
     {
-        Cell sky = CellTypeRegistrar.Register();
-        Cell flower = CellTypeRegistrar.Register();
-        Cell removeMarker = CellTypeRegistrar.Register();
-        Cell petal = CellTypeRegistrar.Register();
+        var registrar = new CellTypeRegistrar();
+
+        Cell sky = registrar.RegisterType();
+        Cell flower = registrar.RegisterType();
+        Cell removeMarker = registrar.RegisterType();
+        Cell petal = registrar.RegisterType();
 
         AutomatonStage seedFlowersStage = new(1, new RandomWrapperRule<AlwaysRule>(0.1f, new(flower)));
 
@@ -87,8 +91,10 @@ internal class Program
     // I didn't see B35 S135 rule on the internet, so lets name it the dumblife, ok?
     static CTKEngine DumbLifeMaker(int sizeX, int sizeY)
     {
-        Cell dead = CellTypeRegistrar.Register();
-        Cell alive = CellTypeRegistrar.Register();
+        var registrar = new CellTypeRegistrar();
+
+        Cell dead = registrar.RegisterType();
+        Cell alive = registrar.RegisterType();
 
         // Random wrapper calls wrapped rule in [chance] cases of all
         // Here, wrapper calls AlwaysRule in 25 cases of 100
