@@ -17,7 +17,7 @@ public sealed class GlobalPositionRule : IRule
 
     public Cell Calculate((int, int) position, Field field)
     {
-        if(position != Position) return default;
+        if(position != (Position.Item1 + field.MyBounds.ValidStart.Item1, Position.Item2 + field.MyBounds.ValidStart.Item2)) return default;
         return EndType;
     }
 }
