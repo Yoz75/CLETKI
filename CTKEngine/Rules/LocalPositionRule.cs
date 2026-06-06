@@ -10,9 +10,21 @@ public sealed class LocalPositionRule : IRule
     private readonly (int, int) Bias;
     private readonly Cell RequiredType, EndType;
 
-    public LocalPositionRule((int, int) bias, Cell requiredType, Cell endType)
+    public LocalPositionRule(PositionBias bias, Cell requiredType, Cell endType)
     {
-        Bias = bias;
+        Bias = bias switch
+        {
+            PositionBias.None => throw new System.ArgumentException("bias is uninitialized!"),
+            PositionBias.LeftUpper => (-1, 1),
+            PositionBias.Upper => (0, 1),
+            PositionBias.RightUpper => (1, 1),
+            PositionBias.LeftDown => (-1, -1),
+            PositionBias.Down => (0, -1),
+            PositionBias.RightDown => (1, 1),
+            PositionBias.Right => (1, 0),
+            PositionBias.Left => (-1, 0),
+            _ => throw new System.ArgumentOutOfRangeException($"Unknown bias type {bias}!")
+        };
         RequiredType = requiredType;
         EndType = endType;
     }
