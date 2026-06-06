@@ -74,14 +74,15 @@ internal sealed class Renderer : IDisposable
         var start = field.MyBounds.ValidStart;
         var end = field.MyBounds.ValidEnd;
 
-        for(int y = start.Item2; y < end.Item2; y++)
+        for(int y = end.Item2 - 1; y >= start.Item2; y--)
         {
             int row = (y - start.Item2)* (int)Width;
 
-            for(int x = start.Item1; x < end.Item1; x++)
+            for(int x = end.Item1 - 1; x >= start.Item1; x--)
             {
+                // Mirror the image verticaly
                 Pixels[row + x - start.Item1] =
-                    Type2Color[field.Map[x, y].Type];
+                    Type2Color[field.Map[end.Item1 - x, end.Item2 - y].Type];
             }
         }
 
