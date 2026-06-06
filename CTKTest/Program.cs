@@ -1,6 +1,7 @@
 ﻿
 using CTK.Engine;
 using CTK.Engine.Rules;
+using System;
 using System.Collections.Generic;
 
 namespace CTK.Test;
@@ -12,9 +13,9 @@ internal class Program
     {
         int sizeX = 512, sizeY = 512;
 
-        using Renderer renderer = new((uint) sizeX, (uint) sizeY);
+        using Renderer renderer = new((uint)sizeX, (uint)sizeY);
 
-        EngineMaker maker = FlowersMaker;
+        EngineMaker maker = GoLMaker;
         CTKEngine engine = maker(sizeX, sizeY);
 
         while(renderer.CanRender())
@@ -42,7 +43,7 @@ internal class Program
 
         // Alive cells stay being alive when there's 2 or 3 neighbors,
         // the long list of numbers is "reversed" 2, 3 list because we want to affect cells that "should be changed*
-        StartTypeWrapperRule<NearRule> dieRule = new(alive, new( alive, dead, 0, 1, 4, 5, 6, 7, 8));
+        StartTypeWrapperRule<NearRule> dieRule = new(alive, new(alive, dead, 0, 1, 4, 5, 6, 7, 8));
 
         AutomatonStage golUpdateStage = new(int.MaxValue, birthRule, dieRule);
 
@@ -64,7 +65,7 @@ internal class Program
 
         AutomatonStage seedFlowersStage = new(1, new RandomWrapperRule<AlwaysRule>(0.1f, new(flower)));
 
-        AutomatonStage cleanupBeginStage = new(2, 
+        AutomatonStage cleanupBeginStage = new(2,
             new NearRule(flower, removeMarker, 2, 3, 4, 5, 6, 7, 8),
             new StartTypeWrapperRule<NearRule>(flower, new(removeMarker, sky, 1, 2, 3, 4, 5, 6, 7, 8)));
 
@@ -74,7 +75,7 @@ internal class Program
 
         Queue<IAutomatonStage> stages = [];
         stages.Enqueue(seedFlowersStage);
-        stages.Enqueue(cleanupBeginStage); 
+        stages.Enqueue(cleanupBeginStage);
         stages.Enqueue(cleanupEndStage);
         stages.Enqueue(growPetalsStage);
 
@@ -111,10 +112,12 @@ internal class Program
         return engine;
     }
 
-    static CTKEngine DayAndNight(int sizeX, int sizeY)
+    static CTKEngine DayAndNightMaker(int sizeX, int sizeY)
     {
-        Cell dead = CellTypeRegistrar.Register();
-        Cell alive = CellTypeRegistrar.Register();
+        var registrar = new CellTypeRegistrar();
+
+        Cell dead = registrar.RegisterType();
+        Cell alive = registrar.RegisterType();
 
         // Random wrapper calls wrapped rule in [chance] cases of all
         // Here, wrapper calls AlwaysRule in 25 cases of 100
@@ -139,7 +142,42 @@ internal class Program
     }
 
     static CTKEngine TreeMaker(int sizeX, int sizeY)
-    { 
-        throw new System.Exception();
+    {
+        var registrar = new CellTypeRegistrar();
+        Cell sky = registrar.RegisterType();
+        Cell wood = registrar.RegisterType();
+        // Cell type that will become wood (sprout that won't become leafs root)
+        Cell woodCandidate = registrar.RegisterType();
+        Cell sprout = registrar.RegisterType();
+        Cell leaf = registrar.RegisterType();
+
+        int trunkLength = Random.Shared.Next(sizeY / 2);
+
+        AutomatonStage growTrunk = new(trunkLength,
+            new GlobalPositionRule((sizeX / 2, 0), wood),
+            new StartTypeWrapperRule<LocalPositionRule>(sky, new(PositionBias.Down, wood, wood)),
+            new LocalPositionRule(PositionBias.Left, wood, woodCandidate),
+            new LocalPositionRule(PositionBias.Right, wood, woodCandidate));
+
+        AutomatonStage placeSprout = new(1,
+            new StartTypeWrapperRule<LocalPositionRule>(wood, new(PositionBias.Upper, sky, sprout)));
+
+        // I'm using trunkLength only to depend the tree crown's size on the trunk size
+        AutomatonStage glowLeafs = new(trunkLength,
+            new NearRule(sprout, leaf, 1),
+            // The more neighbors allowed, the more dense crown will be
+            new RandomWrapperRule<NearRule>(0.1f, new(leaf, leaf, 1, 2, 3, 4, 5)));
+
+        AutomatonStage cleanup = new(1,
+            new StartTypeWrapperRule<AlwaysRule>(woodCandidate, new(wood)),
+            new StartTypeWrapperRule<AlwaysRule>(sprout, new(wood)));
+
+        Queue<IAutomatonStage> stages = [];
+        stages.Enqueue(growTrunk);
+        stages.Enqueue(placeSprout);
+        stages.Enqueue(glowLeafs);
+        stages.Enqueue(cleanup);
+
+        return new((sizeX, sizeY), sky, stages);
     }
 }
