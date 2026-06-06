@@ -10,7 +10,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Authors>yoz75</Authors>
-	<Version>1.0.1</Version>
+	<Version>1.1.0</Version>
     <Company />
     <Description>CTKEngine is a library that simplifies creating and executing cellular automata</Description>
     <PackageProjectUrl>https://github.com/Yoz75/CLETKI/</PackageProjectUrl>
@@ -18,8 +18,9 @@
     <RepositoryUrl>https://github.com/Yoz75/CLETKI/</RepositoryUrl>
     <PackageTags>yoz75;engine;cellular automaton;cellular automata;cellular automaton engine;CLETKI;game of life;GoL</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageReleaseNotes>Fixed clipping of the field resolution (e.g using 62x62 game field when resolution is 64x64)
-</PackageReleaseNotes>
+    <PackageReleaseNotes>
+		See https://github.com/Yoz75/CLETKI/releases/tag/v1.1.0
+	</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
