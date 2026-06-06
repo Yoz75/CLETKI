@@ -43,9 +43,12 @@ This code shows how to make GoL simulation and render it:
 
         Renderer renderer = new();
 
-        // CellTypeRegistrar.Register() makes an instance of Cell that has a new type and ensures the new type is correct
-        Cell dead = CellTypeRegistrar.Register();
-        Cell alive = CellTypeRegistrar.Register();
+        // CellTypeRegistrar.RegisterType() makes an instance of Cell that has a new type and ensures the new type is correct
+        // I recommend to make a new instance of CellTypeRegistrar for each automaton.
+        var registrar = new CellTypeRegistrar();
+
+        Cell dead = registrar.RegisterType();
+        Cell alive = registrar.RegisterType();
 
         // Random wrapper calls wrapped rule in [chance] cases of all
         // Here, wrapper calls AlwaysRule in 25 cases of 100
